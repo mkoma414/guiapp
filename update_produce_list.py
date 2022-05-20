@@ -1,6 +1,10 @@
 import tkinter as tk
 import openpyxl
 
+# ファイル選択ダイアログの表示
+def fileselect_button_clicked():
+  print('変更ボタンがクリックされました')
+
 # 更新ボタンがクリックされた時の動作
 def update_button_clicked():
   # 更新用データの用意
@@ -36,21 +40,31 @@ root = tk.Tk()
 root.title('農産物価格更新')
 root.geometry('450x650')
 
+# ファイル名の表示
+filename_labelframe = tk.LabelFrame(root, text = " 更新ファイル名 ", font=("Meiryo",16))
+filename_labelframe.place(x=50, y=60, width=350, height=80)
+
+filename_label = tk.Label(filename_labelframe, text='全体売上.xlsx', font=("Meiryo",14))
+filename_label.place(x=20, y=10)
+
+file_select_button = tk.Button(filename_labelframe, text='変更', font=("Meiryo",16), command=fileselect_button_clicked)
+file_select_button.place(x=270, y=10, width=60, height=30)
+
 # ラベルの作成
 name_label = tk.Label(root, text='農産物の名称', font=("Meiryo",16))
-name_label.place(x=50 , y=60)
+name_label.place(x=50 , y=200)
 
 price_label = tk.Label(root, text='変更後の価格', font=("Meiryo",16))
-price_label.place(x=260, y=60)
+price_label.place(x=260, y=200)
 
 # テキストボックスの作成
 for i in range(5):
   text_box = tk.Entry(root, font=("Meiryo",14))
-  text_box.place(x=50, y=(95 + i * 55), width=185, height=40)
+  text_box.place(x=50, y=(235 + i * 55), width=185, height=40)
   name_list.append(text_box)
 
   text_box2 = tk.Entry(root, font=("Meiryo",14))
-  text_box2.place(x=260, y=(95 + i * 55), width=140, height=40)
+  text_box2.place(x=260, y=(235 + i * 55), width=140, height=40)
   price_list.append(text_box2)
 
 # 更新ボタンの作成
