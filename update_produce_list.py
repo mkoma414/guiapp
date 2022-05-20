@@ -22,17 +22,31 @@ def update_button_clicked():
 
   wb.save('価格更新.xlsx')
 
+# 初期設定
+name_list = []
+price_list = []
+
 # アプリの雛形作成
 root = tk.Tk()
 root.title('農産物価格更新')
 root.geometry('450x650')
 
-# テキストボックスの作成
-text_box = tk.Entry(root)
-text_box.place(x=50, y=50, width=185, height=40)
+# ラベルの作成
+name_label = tk.Label(root, text='農産物の名称', font=("Meiryo",16))
+name_label.place(x=50 , y=60)
 
-text_box2 = tk.Entry(root)
-text_box2.place(x=260, y=50, width=140, height=40)
+price_label = tk.Label(root, text='変更後の価格', font=("Meiryo",16))
+price_label.place(x=260, y=60)
+
+# テキストボックスの作成
+for i in range(5):
+  text_box = tk.Entry(root, font=("Meiryo",14))
+  text_box.place(x=50, y=(95 + i * 55), width=185, height=40)
+  name_list.append(text_box)
+
+  text_box2 = tk.Entry(root, font=("Meiryo",14))
+  text_box2.place(x=260, y=(95 + i * 55), width=140, height=40)
+  price_list.append(text_box2)
 
 # 更新ボタンの作成
 update_button = tk.Button(root, text='更新', font=("Meiryo",18), command=update_button_clicked)
