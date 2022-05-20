@@ -1,12 +1,26 @@
 import tkinter as tk
+import openpyxl
 
 # 更新ボタンがクリックされた時の動作
 def update_button_clicked():
-  produce_name = text_box.get().replace('\x10', '')
-  price = text_box2.get().replace('\x10', '')
+  # 更新用データの用意
+  name = text_box.get().replace('\x10', '')
+  price = int(text_box2.get().replace('\x10', ''))
 
-  print('農産物名：' + produce_name)
-  print('価格：' + price)
+  update_dict = { name: price }
+
+  # エクセルファイルの更新
+  wb = openpyxl.load_workbook('全体売上.xlsx')
+  sheet = wb.worksheets[0]
+
+  for row_num in range(2, sheet.max_row):
+    produce_name = sheet.cell(row=row_num, column=1).value
+    if produce_name in update_dict:
+      sheet.cell(row=row_num, column=2).value = update_dict[produce_name]
+      fill = openpyxl.styles.PatternFill(patternType='solid',fgColor='FF6E91') 
+      sheet.cell(row=row_num, column=2).fill = fill
+
+  wb.save('価格更新.xlsx')
 
 # アプリの雛形作成
 root = tk.Tk()
