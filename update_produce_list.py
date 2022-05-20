@@ -1,9 +1,19 @@
 import tkinter as tk
+from tkinter import filedialog
 import openpyxl
+import os
+
 
 # ファイル選択ダイアログの表示
 def fileselect_button_clicked():
-  print('変更ボタンがクリックされました')
+  file_type = [('エクセルファイル','*.xlsx')] 
+  file_path = filedialog.askopenfilename(filetypes = file_type, initialdir = current_directory) 
+  basename = os.path.basename(file_path)
+
+  filename_label['text'] = basename
+
+  global original_file_name
+  original_file_name = file_path
 
 # 更新ボタンがクリックされた時の動作
 def update_button_clicked():
@@ -18,7 +28,7 @@ def update_button_clicked():
       update_dict[produce_name] = price
 
   # エクセルファイルの更新
-  wb = openpyxl.load_workbook('全体売上.xlsx')
+  wb = openpyxl.load_workbook(original_file_name)
   sheet = wb.worksheets[0]
 
   for row_num in range(2, sheet.max_row):
@@ -28,12 +38,15 @@ def update_button_clicked():
       fill = openpyxl.styles.PatternFill(patternType='solid',fgColor='FF6E91') 
       sheet.cell(row=row_num, column=2).fill = fill
 
-  wb.save('価格更新.xlsx')
+  wb.save(current_directory + '/価格更新.xlsx')
 
 # 初期設定
 name_list = []
 price_list = []
 update_dict = {}
+
+current_directory = os.getcwd()
+original_file_name = current_directory + '/全体売上.xlsx'
 
 # アプリの雛形作成
 root = tk.Tk()
