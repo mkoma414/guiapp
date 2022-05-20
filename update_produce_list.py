@@ -2,7 +2,11 @@ import tkinter as tk
 
 # 更新ボタンがクリックされた時の動作
 def update_button_clicked():
-  print('ボタンがクリックされました')
+  produce_name = text_box.get().replace('\x10', '')
+  price = text_box2.get().replace('\x10', '')
+
+  print('農産物名：' + produce_name)
+  print('価格：' + price)
 
 # アプリの雛形作成
 root = tk.Tk()
