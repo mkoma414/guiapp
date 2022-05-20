@@ -4,10 +4,14 @@ import openpyxl
 # 更新ボタンがクリックされた時の動作
 def update_button_clicked():
   # 更新用データの用意
-  name = text_box.get().replace('\x10', '')
-  price = int(text_box2.get().replace('\x10', ''))
+  for i in range(5):
+    produce_name = name_list[i].get().replace('\x10', '')
+    price_str = price_list[i].get().replace('\x10', '')
 
-  update_dict = { name: price }
+    # 入力が空でない場合のみデータを追加
+    if produce_name != ""  and price_str != "":
+      price = int(price_str)
+      update_dict[produce_name] = price
 
   # エクセルファイルの更新
   wb = openpyxl.load_workbook('全体売上.xlsx')
@@ -25,6 +29,7 @@ def update_button_clicked():
 # 初期設定
 name_list = []
 price_list = []
+update_dict = {}
 
 # アプリの雛形作成
 root = tk.Tk()
